@@ -34,9 +34,47 @@ def init_db():
       created_at TEXT NOT NULL, reviewed_at TEXT)""")
     get_db().commit()
 
+def bootstrap_admin():
+    password = os.environ.get("BOOTSTRAP_ADMIN_PASSWORD", "")
+
+    if not password:
+        return
+
+    if len(password) < 10:
+        raise RuntimeError("Admin password must be at least 10 characters.")
+
+    existing = get_db().execute(
+        "SELECT id FROM users WHERE email = ?",
+        (ADMIN_EMAIL,)
+    ).fetchone()
+
+    if existing:
+        return
+
+    name = os.environ.get(
+        "BOOTSTRAP_ADMIN_NAME",
+        "School Administrator"
+    )
+
+    get_db().execute("""
+        INSERT INTO users(
+            full_name, email, phone, role,
+            password_hash, status, created_at
+        )
+        VALUES (?, ?, '', 'admin', ?, 'active', ?)
+    """, (
+        name,
+        ADMIN_EMAIL,
+        generate_password_hash(password),
+        datetime.utcnow().isoformat(timespec="seconds")
+    ))
+
+    get_db().commit()
+
+
 with app.app_context():
     init_db()
-
+    bootstrap_admin()
 @app.before_request
 def csrf_setup():
     if "csrf" not in session: session["csrf"] = secrets.token_hex(24)
