@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block content %}
+<section class="auth-page registration-page"><div class="auth-panel registration-panel">
+  <span class="kicker">SCHOOL PORTAL</span><h1 data-i18n="createPortalAccount">Create a Portal Account</h1>
+  <p class="auth-intro">Register as a teacher, parent or student. Your account will be reviewed before you can sign in.</p>
+  <form method="post" class="registration-form"><input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="form-field"><label data-i18n="fullName">Full name</label><input name="full_name" autocomplete="name" required></div>
+    <div class="form-field"><label data-i18n="emailAddress">Email address</label><input type="email" name="email" autocomplete="email" required></div>
+    <div class="form-field"><label data-i18n="phoneNumber">Phone number</label><input name="phone" autocomplete="tel" required></div>
+    <div class="form-field"><label data-i18n="accountType">Account type</label><select name="role" required><option value="" data-i18n="selectAccountType">Select account type</option><option value="teacher" data-i18n="teacher">Teacher</option><option value="parent" data-i18n="parent">Parent</option><option value="student" data-i18n="student">Student</option></select></div>
+    <div class="form-field form-span"><label data-i18n="schoolIdOptional">Admission number / Staff ID (optional)</label><input name="reference_number"></div>
+    <div class="form-field"><label data-i18n="password">Password</label><input type="password" name="password" minlength="10" autocomplete="new-password" required></div>
+    <div class="form-field"><label data-i18n="confirmPassword">Confirm password</label><input type="password" name="confirm_password" minlength="10" autocomplete="new-password" required></div>
+    <p class="form-hint form-span">Your application will remain pending until approved. Use a password you have not used for your email account.</p>
+    <button class="btn btn-primary form-span" type="submit" data-i18n="submitRegistration">Submit Registration</button>
+  </form><p class="auth-help">Already have an account? <a href="/signin" data-i18n="signIn">Sign in</a></p>
+</div></section>{% endblock %}

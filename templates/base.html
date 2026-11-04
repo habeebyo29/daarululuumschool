@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Daarul Uluum Lil Atfaal School — Western and Islamic education in Lagos.">
+  <title>{{ title }} | Daarul Uluum Lil Atfaal School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('school-theme')||'light'}catch(e){}</script>
+</head>
+<body>
+  <div class="top-strip"><div class="ticker"><div class="ticker-track">
+    <span data-i18n="ticker1">Western &amp; Islamic Education</span><b>✦</b>
+    <span>2, Ejoyin Abobatale Street, Behind Rahmat Mosque, Baba Oba, Idimu, Lagos State.</span><b>✦</b>
+    <span data-i18n="ticker2">Connecting Faith and Knowledge for a Brighter Future.</span><b>✦</b>
+    <span data-i18n="ticker1">Western &amp; Islamic Education</span><b>✦</b>
+    <span>2, Ejoyin Abobatale Street, Behind Rahmat Mosque, Baba Oba, Idimu, Lagos State.</span><b>✦</b>
+    <span data-i18n="ticker2">Connecting Faith and Knowledge for a Brighter Future.</span>
+  </div></div></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Daarul Uluum home"><span class="brand-mark">DU</span><span><strong>Daarul Uluum</strong><small>Lil Atfaal School</small></span></a>
+    <button class="mobile-menu" aria-label="Open menu" aria-expanded="false">☰</button>
+    <nav class="main-nav">
+      {% for href,key,label in [('/', 'navHome','Home'),('/about','navAbout','About'),('/academics','navAcademics','Academics'),('/admissions','navAdmissions','Admissions'),('/facilities','navFacilities','Facilities'),('/gallery','navGallery','Gallery'),('/news','navNews','News'),('/faq','navFaq','FAQ'),('/contact','navContact','Contact')] %}
+        <a href="{{ href }}" data-i18n="{{ key }}">{{ label }}</a>
+      {% endfor %}
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn language-toggle" type="button" aria-label="Switch language">العربية</button>
+      <button class="icon-btn theme-toggle" type="button" aria-label="Switch colour theme">◐</button>
+      {% if session.get('user_id') %}<a class="btn btn-outline btn-small" href="{{ '/admin' if session.get('role')=='admin' else '/portal' }}">My Portal</a>
+      {% else %}<a class="btn btn-outline btn-small" href="/signin" data-i18n="signIn">Sign In</a>{% endif %}
+      <a class="btn btn-primary btn-small" href="/create-account" data-i18n="createAccount">Create Account</a>
+    </div>
+  </header>
+  {% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-wrap">{% for cat,msg in messages %}<div class="flash {{ cat }}">{{ msg }}<button type="button" aria-label="Dismiss message" onclick="this.parentElement.remove()">×</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="footer-brand"><div class="footer-logo">DU</div><h3>Daarul Uluum Lil Atfaal School</h3><p data-i18n="motto">Connecting Faith and Knowledge for a Brighter Future.</p></div>
+      <div><h4 data-i18n="quickLinks">Quick Links</h4><a href="/about" data-i18n="navAbout">About</a><a href="/academics" data-i18n="navAcademics">Academics</a><a href="/admissions" data-i18n="navAdmissions">Admissions</a><a href="/facilities" data-i18n="navFacilities">Facilities</a></div>
+      <div><h4 data-i18n="portals">Portals</h4><a href="/signin" data-i18n="signIn">Sign In</a><a href="/create-account" data-i18n="createAccount">Create Portal Account</a><a href="https://daarul-uluum-jets-club.onrender.com/" target="_blank" rel="noopener">School Jets Club ↗</a></div>
+      <div><h4 data-i18n="findUs">Find Us</h4><p>2, Ejoyin Abobatale Street, Behind Rahmat Mosque, Baba Oba, Idimu, Lagos State.</p><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=2+Ejoyin+Abobatale+Street+Baba+Oba+Idimu+Lagos" data-i18n="openMap">Open map ↗</a></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> Daarul Uluum Lil Atfaal School. All rights reserved.</span><span>Built by <a href="https://code-titan-portfolio.onrender.com/" target="_blank" rel="noopener">Code Titan</a></span></div>
+  </footer>
+  <button class="back-top" type="button" aria-label="Back to top">↑</button>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body></html>

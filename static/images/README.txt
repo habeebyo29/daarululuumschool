@@ -1,0 +1,1 @@
+Add school-logo.png, hero-1.jpg, hero-2.jpg, hero-3.jpg, campus.jpg, library.jpg and jets-club.jpg here. Use buildings, classrooms, laboratories, books, equipment and projects. No face photos are needed.
